@@ -510,3 +510,4 @@ X:\GitHub\BestPerfume\obj\Debug\net10.0-windows10.0.19041.0\win-x64\pri.resfiles
 X:\GitHub\BestPerfume\obj\Debug\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt
 X:\GitHub\BestPerfume\obj\Debug\net10.0-windows10.0.19041.0\win-x64\qualifiers.txt.intermediate
 X:\GitHub\BestPerfume\obj\Debug\net10.0-windows10.0.19041.0\win-x64\MultipleQualifiersPerDimensionFound.txt
+X:\GitHub\BestPerfume\obj\Debug\net10.0-windows10.0.19041.0\win-x64\BestPerfume.sourcelink.json
