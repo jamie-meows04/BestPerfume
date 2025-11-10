@@ -29,9 +29,9 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ env.RELEASE_VERSION }}
-          name: Release v${{ env.RELEASE_VERSION }}
-          body: Release v${{ env.RELEASE_VERSION }} automatically created from commit
+          tag_name: ${{ env.RELEASE_VERSION }}
+          name: Release ${{ env.RELEASE_VERSION }}
+          body: Release ${{ env.RELEASE_VERSION }} automatically created from commit
           files: |
             BestPerfume-windows.zip
             bin/Release/net10.0-android/publish/com.jamielow.bestperfume-Signed.apk
