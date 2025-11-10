@@ -16,7 +16,8 @@ jobs:
       - name: Get last commit message
         id: commit
         run: |
-          echo "COMMIT_MSG=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+          COMMIT_MSG=$(git log -1 --no-merges --pretty=%B)
+          echo "$COMMIT_MSG"
 
       # 3. Check commit message pattern vA.B
       - name: Check commit message pattern
