@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BestPerfume"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:tasks="clr-namespace:System.Threading.Tasks;assembly=netstandard"
+    x:TypeArguments="tasks:Task"
+    x:Class="BestPerfume.PerfumePopup"
+    x:DataType="local:PerfumePopup"
+    Padding="0">
+
+    <ScrollView x:Name="scrollView" WidthRequest="600" VerticalOptions="Center">
+        <Grid RowSpacing="10" Padding="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Row="0"
+                   Text="{Binding PerfumeTitle}"
+                   FontSize="24"
+                   FontAttributes="Bold"/>
+
+            <StackLayout Grid.Row="1"
+                         Orientation="Horizontal"
+                         Spacing="4"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         BindableLayout.ItemsSource="{Binding Perfume.Accords}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="local:Accord">
+                        <Border StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{Binding BackgroundColour}"
+                                StrokeThickness="0"
+                                Padding="6,2"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding Name}"
+                                   FontSize="12"
+                                   TextColor="{Binding TextColour}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center" />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <Image Grid.Row="2"
+                   Source="{Binding Perfume.ImageURL}"
+                   Aspect="AspectFill"
+                   WidthRequest="200"
+                   HeightRequest="200"/>
+
+            <Label Grid.Row="3"
+                   Text="{Binding PerfumeNotes}"
+                   FontSize="16"
+                   Padding="0,10,0,10"/>
+
+            <Grid Grid.Row="4"
+                  RowSpacing="10" ColumnSpacing="10" Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Row="0" Grid.Column="1" Padding="0" LineBreakMode="WordWrap" Text="{Binding FavouriteText}" Clicked="ToggleFavourites"/>
+                <Button Grid.Row="0" Grid.Column="0" Padding="0" LineBreakMode="WordWrap" Text="View store page" Clicked="ViewStorePage"/>
+                <Button Grid.Row="1" Grid.Column="0" Padding="0" LineBreakMode="WordWrap" Text="View Fragrantica page" Clicked="ViewFragranticaPage"/>
+                <Button Grid.Row="1" Grid.Column="1" Padding="0" LineBreakMode="WordWrap" Text="Close" Clicked="Close"/>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</toolkit:Popup>

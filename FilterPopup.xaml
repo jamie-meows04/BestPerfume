@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BestPerfume"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="BestPerfume.FilterPopup"
+    x:DataType="local:FilterPopup"
+    Padding="0">
+
+    <toolkit:Popup.Resources>
+        <ResourceDictionary>
+            <local:FilterStateToOpacityConverter x:Key="FilterStateToOpacityConverter" />
+        </ResourceDictionary>
+    </toolkit:Popup.Resources>
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="20">
+        <Label Grid.Row="0"
+               Text="Select Filters"
+               FontAttributes="Bold"
+               FontSize="24"/>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,Auto,Auto,Auto" 
+              IsVisible="{OnPlatform WinUI=True, Android=False}"
+              ColumnSpacing="10">
+            <Entry x:Name="searchBarDesktop"
+                   Grid.Column="0"
+                   Placeholder="Search perfume name, number, brand, etc."
+                   Text=""
+                   Keyboard="Default"
+                   HorizontalOptions="Fill"/>
+            <Button Grid.Column="1" Text="Clear Search" Clicked="ClearSearchBar"/>
+            <Button Grid.Column="2" Text="Reset Filters" Clicked="ResetFilters"/>
+            <Button Grid.Column="3" Text="Apply Filters" Clicked="Close"/>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,*,*" 
+              RowDefinitions="Auto,Auto"
+              IsVisible="{OnPlatform Android=True, WinUI=False}"
+              ColumnSpacing="10">
+            <Entry x:Name="searchBarPhone"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="3"
+                   Placeholder="Search perfume name, number, brand, etc."
+                   Text=""
+                   Keyboard="Default"
+                   HorizontalOptions="Fill"/>
+            
+            <Button Grid.Row="1" Grid.Column="0"
+                    Text="Clear Search"
+                    LineBreakMode="WordWrap"
+                    Padding="5"
+                    Clicked="ClearSearchBar"/>
+            
+            <Button Grid.Row="1" Grid.Column="1"
+                    Text="Reset Filters"
+                    LineBreakMode="WordWrap"
+                    Padding="5"
+                    Clicked="ResetFilters"/>
+            
+            <Button Grid.Row="1" Grid.Column="2"
+                    Text="Apply Filters"
+                    LineBreakMode="WordWrap"
+                    Padding="5"
+                    Clicked="Close"/>
+        </Grid>
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Accords}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="{OnPlatform Android=1, WinUI=5}" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:Accord">
+                    <Grid Padding="5"
+                          ColumnSpacing="5"
+                          ColumnDefinitions="*,Auto,Auto,Auto">
+
+                        <Border Grid.Column="0"
+                                StrokeShape="RoundRectangle 20"
+                                BackgroundColor="{Binding BackgroundColour}"
+                                StrokeThickness="0"
+                                Padding="6,2"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding Name}"
+                                   FontSize="14"
+                                   TextColor="{Binding TextColour}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   Padding="0"/>
+                        </Border>
+
+                        <Button Grid.Column="1"
+                                Text="And"
+                                Padding="5"
+                                MinimumHeightRequest="0"
+                                Opacity="{Binding FilterState, Converter={StaticResource FilterStateToOpacityConverter}, ConverterParameter=1}"
+                                CommandParameter="{Binding .}"
+                                Clicked="ToggleAnd"
+                                MinimumWidthRequest="40"/>
+
+                        <Button Grid.Column="2"
+                                Text="Or"
+                                Padding="5"
+                                MinimumHeightRequest="0"
+                                Opacity="{Binding FilterState, Converter={StaticResource FilterStateToOpacityConverter}, ConverterParameter=2}"
+                                CommandParameter="{Binding .}"
+                                Clicked="ToggleOr"
+                                MinimumWidthRequest="40"/>
+
+                        <Button Grid.Column="3"
+                                Text="Not"
+                                Padding="5"
+                                MinimumHeightRequest="0"
+                                Opacity="{Binding FilterState, Converter={StaticResource FilterStateToOpacityConverter}, ConverterParameter=3}"
+                                CommandParameter="{Binding .}"
+                                Clicked="ToggleNot"
+                                MinimumWidthRequest="40"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</toolkit:Popup>

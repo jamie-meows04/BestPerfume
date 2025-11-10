@@ -1,0 +1,8 @@
+<api type="release" assembly-name="BestPerfume" mvid="25a3ab8018cc4f8eaec4b6927101448d">
+  <module assembly-name="BestPerfume" mvid="25a3ab8018cc4f8eaec4b6927101448d" mvid-bytes="gKujJcwYjk+uxLaScQFEjQ==">
+    <types-scratch>
+      <entry key="crc642a0234c3f9e71075/MainActivity" java-name="crc642a0234c3f9e71075/MainActivity" managed-type-name="BestPerfume.MainActivity" token="33554528" />
+      <entry key="crc642a0234c3f9e71075/MainApplication" java-name="crc642a0234c3f9e71075/MainApplication" managed-type-name="BestPerfume.MainApplication" token="33554529" />
+    </types-scratch>
+  </module>
+</api>
