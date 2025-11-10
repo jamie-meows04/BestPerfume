@@ -1,40 +1,30 @@
-name: Release on version commit
+name: Release on tag push
 
 on:
   push:
     tags:
-      - 'v*.*'
+      - 'v*.*'  # matches tags like v1.2, v12.34
 
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
-      # 1. Checkout repo
+      # 1. Checkout repository
       - uses: actions/checkout@v3
 
-      # 2. Get last commit message
-      - name: Get last commit message
-        id: commit
-        run: |
-          COMMIT_MSG=$(git log -1 --no-merges --pretty=%B)
-          echo "$COMMIT_MSG"
-
-      # 3. Check commit message pattern vA.B
-      - name: Check commit message pattern
-        id: check
-        run: |
-          if [[ ! "$COMMIT_MSG" =~ ^v[0-9]+\.[0-9]+$ ]]; then
-            echo "Commit message does not match vA.B, skipping release."
-            exit 78
-          fi
-          echo "Commit message matches release pattern."
-
-      # 4. Set release version
+      # 2. Set release version from the tag
       - name: Set release version
         run: |
-          echo "RELEASE_VERSION=${COMMIT_MSG}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "Release version: $RELEASE_VERSION"
 
-      # 5. Create a GitHub release
+      # 3. Zip folder contents
+      - name: Zip folder
+        run: |
+          zip -r BestPerfume-windows.zip bin/Release/net10.0-windows10.0.19041.0/win-x64/publish/*
+
+      # 4. Create a GitHub release
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -42,18 +32,6 @@ jobs:
           tag_name: v${{ env.RELEASE_VERSION }}
           name: Release v${{ env.RELEASE_VERSION }}
           body: Release v${{ env.RELEASE_VERSION }} automatically created from commit
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # 6. Zip folder contents
-      - name: Zip folder
-        run: |
-          zip -r BestPerfume-windows.zip bin/Release/net10.0-windows10.0.19041.0/win-x64/publish/*
-
-      # 7. Upload zip + other files to release
-      - name: Upload assets
-        uses: softprops/action-gh-release@v1
-        with:
           files: |
             BestPerfume-windows.zip
             bin/Release/net10.0-android/publish/com.jamielow.bestperfume-Signed.apk
